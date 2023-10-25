@@ -1,18 +1,17 @@
 package edu.jsu.mcis.cs425.ex2;
 
 import java.io.PrintWriter;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import com.github.cliftonlabs.json_simple.*;
-import edu.jsu.mcis.cs425.ex2.dao.DAOFactory;
-import edu.jsu.mcis.cs425.ex2.dao.RegistrationDAO;
 import jakarta.servlet.ServletContext;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import edu.jsu.mcis.cs425.ex2.dao.DAOFactory;
+import edu.jsu.mcis.cs425.ex2.dao.RegistrationDAO;
 
 public class Registration extends HttpServlet {
 
@@ -73,13 +72,11 @@ public class Registration extends HttpServlet {
             
             RegistrationDAO dao = daoFactory.getRegistrationDAO();
             out.println(dao.create(username, termid, crn));
-            
-            
+                 
         }
         catch (Exception e) {
             e.printStackTrace();
-        }
-        
+        } 
     }
     
     @Override
@@ -113,6 +110,7 @@ public class Registration extends HttpServlet {
             }
             
             String username = request.getRemoteUser();
+            
             int termid = Integer.parseInt(parameters.get("termid"));
             int crn = Integer.parseInt(parameters.get("crn"));
             
@@ -120,8 +118,7 @@ public class Registration extends HttpServlet {
             
             out.println(dao.delete(username, termid, crn));
 
-        } 
-        
+        }       
         catch (Exception e) {
             e.printStackTrace();
         }         

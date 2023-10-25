@@ -21,22 +21,20 @@ public class SearchDAO {
     + "JOIN course ON section.subjectid = course.subjectid AND section.num = course.num) "
     + "JOIN `level` ON course.levelid = `level`.id) "
     + "JOIN term ON section.termid = term.id) "
-    + "WHERE ((? IS NULL OR course.subjectid = ?) "    // subjectid (parameters 1 & 2)
-    + "AND (? IS NULL OR course.num = ?) "             // num (parameters 3 & 4)
-    + "AND (? IS NULL OR `level`.id = ?) "             // levelid (parameters 5 & 6)
-    + "AND (? IS NULL OR section.scheduletypeid = ?) " // scheduletypeid (parameters 7 & 8)
-    + "AND (? IS NULL OR section.`start` >= ?) "       // start as LocalTime (parameters 9 & 10)
-    + "AND (? IS NULL OR section.`end` <= ?) "         // end as LocalTime (parameters 11 & 12)
-    + "AND (? IS NULL OR section.days REGEXP ?) "      // days (ex: "M|W|F") (parameters 13 & 14)
-    + "AND (section.termid = ?)) "                     // termid (parameter 15)
+    + "WHERE ((? IS NULL OR course.subjectid = ?) "
+    + "AND (? IS NULL OR course.num = ?) "
+    + "AND (? IS NULL OR `level`.id = ?) "
+    + "AND (? IS NULL OR section.scheduletypeid = ?) "
+    + "AND (? IS NULL OR section.`start` >= ?) "
+    + "AND (? IS NULL OR section.`end` <= ?) "
+    + "AND (? IS NULL OR section.days REGEXP ?) "
+    + "AND (section.termid = ?)) "
     + "ORDER BY course.num, section";
-    
-    
+      
     SearchDAO(DAOFactory dao) {
         this.daoFactory = dao;
     }
-    
-    
+     
     public String find(Map<String, String[]> params){
 
         JsonObject results = new JsonObject();
@@ -47,6 +45,7 @@ public class SearchDAO {
         ResultSet rs = null;
 
         try {
+            
             ps = conn.prepareStatement(QUERY_FIND);
             
             String subjectid = (params.get("subjectid") != null ? params.get("subjectid")[0] : null);
@@ -57,8 +56,7 @@ public class SearchDAO {
             String end = (params.get("end") != null ? params.get("end")[0] : null);
             String days = (params.get("days") != null ? String.join("|", (params.get("days")[0]).split("")) : null);
             String termid = (params.get("termid") != null ? params.get("termid")[0] : null);
-           
-          
+                  
             ps.setString(1, subjectid);
             ps.setString(2, subjectid);
             ps.setString(3, num);
@@ -76,8 +74,7 @@ public class SearchDAO {
             ps.setString(15, termid);
             
             System.err.println(ps.toString());
-
-            
+        
             boolean hasresults = ps.execute();
 
             if (hasresults) {
@@ -113,13 +110,11 @@ public class SearchDAO {
                     json.put("crn", rs.getString("crn"));
                     
                     data.add(json);
-                    
-                                        
+                                               
                 }
                 
                 results.put("data", data);
                         
-
             }
 
         }

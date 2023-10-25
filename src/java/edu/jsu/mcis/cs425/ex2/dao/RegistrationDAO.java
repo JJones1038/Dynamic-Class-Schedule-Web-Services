@@ -4,27 +4,20 @@ import com.github.cliftonlabs.json_simple.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class RegistrationDAO {
     
     private final DAOFactory daoFactory;
     
     private final String QUERY_USERNAME = "SELECT * FROM student WHERE username = ?";
-    private final String QUERY_CREATE = "INSERT INTO "
-            + "registration (studentid, termid, crn) VALUES (?, ?, ?)";
+    private final String QUERY_CREATE = "INSERT INTO registration (studentid, termid, crn) VALUES (?, ?, ?)";
     private final String QUERY_DELETE = "DELETE FROM registration WHERE studentid=? AND termid=? AND crn=?";
-    private final String QUERY_LIST = "SELECT registration.*, section.*, course.* " 
-            + "FROM Registration " 
+    private final String QUERY_LIST = "SELECT registration.*, section.*, course.* FROM Registration " 
             + "INNER JOIN Section ON Registration.termid = Section.termid AND "
             + "Registration.crn = Section.crn " 
             + "INNER JOIN Course ON Section.subjectid = Course.subjectid AND Section.num = Course.num "
             + "WHERE registration.termid = ? and registration.studentid = ?";
-    
-    
-    
+     
     RegistrationDAO(DAOFactory dao) {
         this.daoFactory = dao;
     }
@@ -72,16 +65,13 @@ public class RegistrationDAO {
                     json.put("credits", rs.getString("credits"));
                     json.put("where", rs.getString("where"));
                     json.put("crn", rs.getString("crn"));
-                    
-                    
+                                      
                     data.add(json);
-                    
-                                        
+                                                           
                 }
                 
                 results.put("data", data);
                         
-
             }
 
         }
@@ -111,8 +101,7 @@ public class RegistrationDAO {
         }
         return Jsoner.serialize(results);
     }
-    
-    
+      
     public Boolean create(String username, int termid, int crn) {
         Connection conn = daoFactory.getConnection();
         PreparedStatement ps1 = null;
@@ -131,7 +120,6 @@ public class RegistrationDAO {
         }
         catch (Exception e) {
             e.printStackTrace();
-            // Handle the exception as per your application's error handling approach
         }
         finally {
             if (ps1 != null) {
@@ -164,7 +152,6 @@ public class RegistrationDAO {
         }
         catch (Exception e) {
             e.printStackTrace();
-            // Handle the exception as per your application's error handling approach
         }
         finally {
             if (ps != null) {

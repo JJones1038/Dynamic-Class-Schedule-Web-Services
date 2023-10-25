@@ -4,12 +4,9 @@ import java.io.PrintWriter;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import com.github.cliftonlabs.json_simple.*;
 import edu.jsu.mcis.cs425.ex2.dao.DAOFactory;
-import edu.jsu.mcis.cs425.ex2.dao.RegistrationDAO;
 import edu.jsu.mcis.cs425.ex2.dao.SearchDAO;
 import jakarta.servlet.ServletContext;
-import java.time.LocalTime;
 import java.util.Map;
 
 public class Search extends HttpServlet {
@@ -31,8 +28,7 @@ public class Search extends HttpServlet {
         }
         
         response.setContentType("application/json;charset=UTF-8"); 
-        
-        
+               
         try ( PrintWriter out = response.getWriter()) {
             
             Map<String, String[]> params = request.getParameterMap();
@@ -40,7 +36,6 @@ public class Search extends HttpServlet {
             SearchDAO dao = daoFactory.getSearchDAO();
             out.println(dao.find(params));
             
-
         }
         catch (Exception e) {
             e.printStackTrace();
