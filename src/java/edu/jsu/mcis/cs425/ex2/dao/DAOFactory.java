@@ -51,4 +51,8 @@ public class DAOFactory {
         return new SearchDAO(this);
     }
     
+    public FormDAO getFormDAO() {
+        return new FormDAO(this);
+    }
+    
 }
