@@ -41,6 +41,10 @@ public class ParameterBean {
         parameters.put("scheduletypeid", termid);
     }
     
+    public void setLevelid(String termid) {
+        parameters.put("levelid", termid);
+    }
+    
     public void setBoxmon(String termid) {
         parameters.put("boxmon", termid);
         setDays();

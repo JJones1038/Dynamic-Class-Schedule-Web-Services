@@ -11,6 +11,7 @@ public class FormDAO {
     private final String QUERY_TERM_LIST = "SELECT * FROM term";
     private final String QUERY_SUBJECT_LIST = "SELECT * FROM subject ORDER BY name";
     private final String QUERY_SCHEDULETYPE_LIST = "SELECT * FROM scheduletype";
+    private final String QUERY_LEVEL_LIST = "SELECT * FROM level";
     
     FormDAO(DAOFactory dao) {
         this.daoFactory = dao;
@@ -150,6 +151,65 @@ public class FormDAO {
             if (hasresults) {
                 
                 s.append("<select id=\"scheduletypeid\" name=\"scheduletypeid\">");
+
+                rs = ps.getResultSet();
+                
+                while (rs.next()) {
+                    
+                    s.append("<option value=\"").append(rs.getString("id")).append("\">");
+                    s.append(rs.getString("description"));
+                    s.append("</option>");
+                                                           
+                }
+                
+                s.append("</select>");
+                        
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+
+            if (rs != null) {
+                try {
+                    rs.close();
+                    rs = null;
+                }
+                catch (Exception e) {
+                    e.printStackTrace(); 
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                    ps = null;
+                }
+                catch (Exception e) {
+                    e.printStackTrace(); 
+                }
+            } 
+        }
+        return (s.toString());
+    }
+    
+    public String getLevelListAsHTML() {
+
+        StringBuilder s = new StringBuilder();
+
+        Connection conn = daoFactory.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = conn.prepareStatement(QUERY_LEVEL_LIST);
+            
+            boolean hasresults = ps.execute();
+
+            if (hasresults) {
+                
+                s.append("<select id=\"levelid\" name=\"levelid\">");
 
                 rs = ps.getResultSet();
                 

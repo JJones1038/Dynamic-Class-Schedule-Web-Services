@@ -54,12 +54,10 @@
                 
                 <%= dao.getScheduleTypeListAsHTML() %>
    
-                
                 <p>
-                    <label>Course Level: </label> &emsp;
-                    <select>
-                        <option></option>
-                    </select>
+                <label for="levelid"><strong>Course Level:</strong>&nbsp;</label>
+                
+                <%= dao.getLevelListAsHTML() %>
                 </p>
                 
                 <p>
@@ -75,7 +73,8 @@
                     
                     <label>AM/PM: </label>
                     <select>
-                        <option></option>
+                        <option>AM</option>
+                        <option>PM</option>
                     </select>   
                 </p>
                 
@@ -92,7 +91,8 @@
                     
                     <label>AM/PM: </label>
                     <select>
-                        <option></option>
+                        <option>AM</option>
+                        <option>PM</option>
                     </select>   
                 </p>
                 
@@ -107,7 +107,7 @@
                     <label>Wed</label>
                     
                     <input name="boxthu" type="checkbox">
-                    <label>Thur</label>
+                    <label>Thu</label>
                     
                     <input name="boxfri" type="checkbox">
                     <label>Fri</label>
